@@ -47,7 +47,6 @@ for i in range(len(task_tables)):
     task = [i, t_a, t_s, t_b, list(t_o), list(t_d)]
     tasks.append(task)
 
-'读取固有worker的信息'
 worker_data1 = xlrd.open_workbook(r'E:\experiment-elastic\\worker_test1.xlsx')
 worker_table = worker_data1.sheets()[0]
 
@@ -80,10 +79,8 @@ for i in range(len(worker_tables)):
     worker = [w_l, w_v, w_S]
     workers.append(worker)
 
-# 将任务分配给工人
 for task in tasks:
     for i, worker in enumerate(workers):
-        # 判断工人是否可以完成任务
         if (task[2] - task[1]) * worker[1] >= ((task[4][0] - worker[0][0])**2 + (task[4][1] - worker[0][1])**2)**0.5:
             workers[i][2].append(task[0])
 
@@ -137,9 +134,7 @@ for i, worker in enumerate(workers):
     result = {}
     max_tasks, max_task_list = dfs_max_tasks(worker, tasks, worker[0], 0, [], result)
     results[i] = (max_tasks, max_task_list)
-'时间测试'
 
-# 构建依赖图
 G = nx.DiGraph()
 for i in range(len(workers)):
     for j in range(i+1, len(workers)):
